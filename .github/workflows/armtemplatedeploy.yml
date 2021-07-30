@@ -36,4 +36,6 @@ jobs:
           template: ./arm-templates/storageaccount.json
           parameters: 
             ./arm-templates/storageaccount.parameters.json
+            storageAccountName=globostg003
+            location="Canada Central"
           deploymentMode: incremental
