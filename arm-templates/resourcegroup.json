@@ -12,7 +12,7 @@
         "resourceGroupName": {
             "type": "string",
             "metadata": {
-                "description": "Enter the name for the resource group:"
+                "description": "Enter the name for the Resource Group:"
             },
             "defaultValue": "rg-githubactions"            
         }
