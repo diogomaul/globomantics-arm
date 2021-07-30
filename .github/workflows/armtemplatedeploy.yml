@@ -23,7 +23,7 @@ jobs:
         with:
           scope: subscription
           subscriptionID: 7c1ae066-36c2-4723-8172-caf805c36c16
-          region: East US
+          region: Canada Central
           template: ./arm-templates/resourcegroup.json
           deploymentName: rg-githubactions
 
