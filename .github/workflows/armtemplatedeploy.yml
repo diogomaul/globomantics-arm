@@ -8,7 +8,7 @@ on:
 
 env:
   resource_group_name: rg-githubactions
-  location: Canada Central
+  location: "Canada Central"
   subscriptionID: 7c1ae066-36c2-4723-8172-caf805c36c16
 
 jobs:
