@@ -13,6 +13,12 @@
             "metadata": {
                 "description": "Enter location to deploy the resources"
             }
+        },
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter the VM Name"
+            }
         }
     },
     "functions": [],
@@ -98,7 +104,7 @@
             }
         },
         {
-            "name": "ubuntuVM1",
+            "name": "[parameters('vmName')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-07-01",
             "location": "[parameters('location')]",
@@ -113,7 +119,7 @@
                     "vmSize": "Standard_A2_v2"
                 },
                 "osProfile": {
-                    "computerName": "ubuntuVM1",
+                    "computerName": "[parameters('vmName')]",
                     "adminUsername": "maul",
                     "adminPassword": "[parameters('adminPassword')]"
                 },
@@ -140,5 +146,10 @@
             }
         }
     ],
-    "outputs": {}
+    "outputs": {
+        "vmName": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Compute/virtualMachines',parameters('vmName'))).primaryEndpoints.vmName]"
+        }
+    }
 }

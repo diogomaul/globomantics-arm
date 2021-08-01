@@ -8,6 +8,7 @@ on:
 
 env:
   subscriptionID: 7c1ae066-36c2-4723-8172-caf805c36c16
+  vmName: ubuntuVM1
 
 jobs:
   armDeployStaging:
@@ -26,6 +27,13 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.Azure_Credentials }}
+
+      - name: Azure key vault - Get Secrets
+        uses: Azure/get-keyvault-secrets@v1.2
+        with:
+          keyvault: "diogomaul-secrets"
+          secrets: "vmPasswordStg"
+        id: getKeyVaultSecret
         
       - name: Deploy Resource Group ${{ env.resource_group_name }}
         uses: Azure/arm-deploy@v1
@@ -61,11 +69,12 @@ jobs:
           subscriptionID: ${{env.subscriptionID }}
           template: ./arm-templates/virtualmachine.json
           parameters: 
-            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
+            adminPassword=${{ steps.getKeyVaultSecret.outputs.vmPasswordStag}}
             location="${{ env.location }}"
           deploymentMode: incremental
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+      - run: echo ${{ steps.createVm.outputs.vmName }}
 
   armDeployProduction:
     name: Deploy to Production
@@ -85,6 +94,13 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.Azure_Credentials }}
+
+      - name: Azure key vault - Get Secrets
+        uses: Azure/get-keyvault-secrets@v1.2
+        with:
+          keyvault: "diogomaul-secrets"
+          secrets: "vmPasswordProd"
+        id: getKeyVaultSecret
         
       - name: Deploy Resource Group ${{ env.resource_group_name }}
         uses: Azure/arm-deploy@v1
@@ -108,7 +124,7 @@ jobs:
           template: ./arm-templates/storageaccount.json
           parameters: 
             sku=Standard_LRS
-            storageAccountName=globostg001-prod
+            storageAccountName=globostg001prod
             location="${{ env.location }}"
           deploymentMode: incremental
 
@@ -120,9 +136,11 @@ jobs:
           subscriptionID: ${{env.subscriptionID }}
           template: ./arm-templates/virtualmachine.json
           parameters: 
-            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
+            adminPassword=${{ steps.getKeyVaultSecret.outputs.vmPasswordProd}}
             location="${{ env.location }}"
           deploymentMode: incremental
+        id: createVm
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
+      - run: echo ${{ steps.createVm.outputs.vmName }}
 
