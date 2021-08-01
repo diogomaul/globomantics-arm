@@ -71,6 +71,7 @@ jobs:
           parameters: 
             adminPassword=${{ steps.getKeyVaultSecret.outputs.vmPasswordStag}}
             location="${{ env.location }}"
+            vmName=${{env.vmName}}
           deploymentMode: incremental
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
@@ -138,6 +139,7 @@ jobs:
           parameters: 
             adminPassword=${{ steps.getKeyVaultSecret.outputs.vmPasswordProd}}
             location="${{ env.location }}"
+            vmName=${{env.vmName}}
           deploymentMode: incremental
         id: createVm
 
