@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  resource_group_name: ${{ env.resource_group_name }}
-  location: ${{ env.location }}
+  resource_group_name: rg-githubactions
+  location: "Canada Central"
   subscriptionID: 7c1ae066-36c2-4723-8172-caf805c36c16
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
         with:
           scope: subscription
           subscriptionID: ${{env.subscriptionID }}
-          region: Canada Central
+          region: ${{ env.location }}
           template: ./arm-templates/resourcegroup.json
           parameters:
             location=${{ env.location }}
