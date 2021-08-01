@@ -52,7 +52,7 @@ jobs:
           subscriptionID: 7c1ae066-36c2-4723-8172-caf805c36c16
           template: ./arm-templates/virtualmachine.json
           parameters: 
-            adminPassword="My$secureP@ssword!"
+            adminPassword=${{ secrets.UBUNTU_ADMIN_PASSWORD }}
           deploymentMode: incremental
 
       - run: echo ${{ steps.storageAccountDeploy.outputs.BlobUri }}
