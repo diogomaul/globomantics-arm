@@ -32,7 +32,7 @@ jobs:
         uses: Azure/get-keyvault-secrets@v1.2
         with:
           keyvault: "diogomaul-secrets"
-          secrets: "vmPasswordStg"
+          secrets: "vmPasswordStag"
         id: getKeyVaultSecret
         
       - name: Deploy Resource Group ${{ env.resource_group_name }}
