@@ -49,7 +49,7 @@ jobs:
           template: ./arm-templates/storageaccount.json
           parameters: 
             sku=Standard_LRS
-            storageAccountName=globostg002-stg
+            storageAccountName=globostg002stg
             location="${{ env.location }}"
           deploymentMode: incremental
 
@@ -71,7 +71,7 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     env:
-      resource_group_name: rg-githubactions-prod
+      resource_group_name: rg-githubactionsprod
       location: East US
     environment: 
         name: production
